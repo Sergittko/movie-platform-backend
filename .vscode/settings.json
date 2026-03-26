@@ -1,0 +1,6 @@
+{
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
