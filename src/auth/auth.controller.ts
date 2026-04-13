@@ -1,0 +1,31 @@
+import { Body, Controller, Post, Request } from '@nestjs/common';
+
+import { AuthService } from '@/auth/auth.service';
+import { AuthResetPasswordDto, AuthSignInDto, AuthSignUpDto } from '@/auth/dto/auth.dto';
+import { AuthResponse } from '@/auth/dto/auth-response.dto';
+
+@Controller()
+export class AuthController {
+  // eslint-disable-next-line prettier/prettier
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('signUp')
+  signUp(@Body() dto: AuthSignUpDto): Promise<AuthResponse> {
+    return this.authService.signUp(dto);
+  }
+
+  @Post('signIn')
+  signIn(@Body() dto: AuthSignInDto): Promise<AuthResponse> {
+    return this.authService.signIn(dto);
+  }
+
+  @Post('reset-password')
+  resetPassword(@Body() dto: AuthResetPasswordDto, @Request() req: any): Promise<any> {
+    return this.authService.resetPassword({ dto, email: req.user.email });
+  }
+
+  @Post('refresh')
+  refresh(@Body('refresh_token') refreshToken: string) {
+    return this.authService.refreshTokens(refreshToken);
+  }
+}
