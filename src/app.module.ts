@@ -7,6 +7,7 @@ import { AppController } from '@/app.controller';
 import { AuthModule } from '@/auth/auth.module';
 import { SupabaseGuard } from '@/auth/supabase/supabase.guard';
 import { SupabaseModule } from '@/auth/supabase/supabase.module';
+import { MoviesModule } from '@/movies/movies.module';
 import { PrismaService } from '@/prisma/prisma.service';
 import { UsersModule } from '@/users/users.module';
 
@@ -20,6 +21,7 @@ import { UsersModule } from '@/users/users.module';
     SupabaseModule,
     AuthModule,
     UsersModule,
+    MoviesModule,
   ],
   controllers: [AppController],
   providers: [
