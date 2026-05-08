@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 
 import { MoviesListTypesEnum, SortByEnum } from '@/interfaces/movies';
-import { GetMoviesListDto, SearchMoviesDto } from '@/movies/dto/movies.dto';
+import { GetMoviesListDto, SearchMovieByNameDto, SearchMoviesDto } from '@/movies/dto/movies.dto';
 
 @Injectable()
 export class MoviesService {
@@ -108,6 +108,29 @@ export class MoviesService {
     const { data } = await firstValueFrom(
       this.httpService.get(`${this.baseUrl}/discover/movie`, {
         params,
+      }),
+    );
+
+    return {
+      page: data.page,
+      totalPages: data.total_pages,
+      totalResults: data.total_results,
+      results: data.results,
+    };
+  }
+
+  async searchMoviesByName(dto: SearchMovieByNameDto) {
+    const { query, page = 1 } = dto;
+
+    const { data } = await firstValueFrom(
+      this.httpService.get(`${this.baseUrl}/search/movie`, {
+        params: {
+          api_key: this.apiKey,
+          language: 'en-US',
+          query,
+          page,
+          include_adult: false,
+        },
       }),
     );
 

@@ -51,3 +51,14 @@ export class SearchMoviesDto {
   @Transform(({ value }: { value: string }) => parseInt(value))
   ratingTo?: number;
 }
+
+export class SearchMovieByNameDto {
+  @IsString()
+  @IsNotEmpty()
+  query!: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Transform(({ value }: { value: string }) => parseInt(value, 10))
+  page?: number;
+}

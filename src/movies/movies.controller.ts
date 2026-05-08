@@ -1,13 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
 
 import { Public } from '@/common/decorators/public.decorator';
-import { GetMoviesListDto, SearchMoviesDto } from '@/movies/dto/movies.dto';
+import { GetMoviesListDto, SearchMovieByNameDto, SearchMoviesDto } from '@/movies/dto/movies.dto';
 import { MoviesService } from '@/movies/movies.service';
 
 @Public()
 @Controller('movies')
 export class MoviesController {
-  // eslint-disable-next-line prettier/prettier
   constructor(private readonly moviesService: MoviesService) {}
 
   @Get('genres')
@@ -28,5 +27,10 @@ export class MoviesController {
   @Get('search')
   searchMovies(@Query() dto: SearchMoviesDto) {
     return this.moviesService.searchMovies(dto);
+  }
+
+  @Get('search-by-name')
+  searchMoviesByName(@Query() dto: SearchMovieByNameDto) {
+    return this.moviesService.searchMoviesByName(dto);
   }
 }
