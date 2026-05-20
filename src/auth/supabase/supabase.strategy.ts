@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { AuthUser } from '@supabase/supabase-js';
 import * as jwksRsa from 'jwks-rsa';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+
+import { AuthenticatedUser } from '@/interfaces/auth';
 
 @Injectable()
 export class SupabaseStrategy extends PassportStrategy(Strategy) {
@@ -22,7 +23,10 @@ export class SupabaseStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(user: AuthUser) {
-    return user;
+  validate(payload: any): AuthenticatedUser {
+    return {
+      id: payload.sub,
+      email: payload.email,
+    };
   }
 }

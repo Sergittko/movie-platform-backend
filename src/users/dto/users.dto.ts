@@ -17,3 +17,27 @@ export class ProfilePatchDataDto {
   @IsOptional()
   name?: string;
 }
+
+export class CreateMovieDto {
+  @IsString()
+  @IsNotEmpty()
+  movieId!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  title!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  image!: string;
+}
+
+export class UpdateMovieDto {
+  @IsOptional()
+  @IsString()
+  title?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+}

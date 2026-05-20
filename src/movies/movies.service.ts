@@ -44,10 +44,12 @@ export class MoviesService {
     const { data } = await firstValueFrom(this.httpService.get(url, { params }));
 
     return {
+      data: {
+        movies: data.results,
+      },
       page: data.page,
       totalPages: data.total_pages,
       totalResults: data.total_results,
-      results: data.results,
     };
   }
 

@@ -14,4 +14,42 @@ model Profile {
   name           String
   email          String
   avatar         String? 
+
+  watchedMovies  WatchedMovie[]
+  watchlistMovies WatchlistMovie[]
+}
+
+model WatchedMovie {
+  id         String   @id @default(cuid())
+
+  movieId    String
+  title      String
+  image      String
+
+  profileId  String
+  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+
+  @@index([profileId])
+
+  @@unique([movieId, profileId])
+}
+
+model WatchlistMovie {
+  id         String   @id @default(cuid())
+
+  movieId    String
+  title      String
+  image      String
+
+  profileId  String
+  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+
+  @@index([profileId])
+
+  @@unique([movieId, profileId])
+
 }

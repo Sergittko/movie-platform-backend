@@ -1,10 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 import { handleCatchError } from '@/helpers/handle-catch-error';
+import { PaginationParamsDto } from '@/interfaces/pagination.dto';
 
 import { Supabase } from '../auth/supabase/supabase';
 import { PrismaService } from '../prisma/prisma.service';
-import { ProfilePatchDataDto } from '../users/dto/users.dto';
+import { CreateMovieDto, ProfilePatchDataDto, UpdateMovieDto } from '../users/dto/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -152,6 +153,328 @@ export class UsersService {
 
       return {
         message: 'Avatar deleted successfully!',
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async getWatchlist(userId: string, dto: PaginationParamsDto) {
+    const { page = 1, limit = 10 } = dto;
+
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const skip = (+page - 1) * +limit;
+
+      const [movies, totalResults] = await Promise.all([
+        this.prisma.watchlistMovie.findMany({
+          where: {
+            profileId: profile.id,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          skip,
+          take: +limit,
+        }),
+
+        this.prisma.watchlistMovie.count({
+          where: {
+            profileId: profile.id,
+          },
+        }),
+      ]);
+
+      return {
+        data: {
+          movies,
+        },
+        page,
+        limit,
+        totalResults,
+        totalPages: Math.ceil(totalResults / limit),
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async addToWatchlist({ userId, dto }: { userId: string; dto: CreateMovieDto }) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const movie = await this.prisma.watchlistMovie.create({
+        data: {
+          movieId: dto.movieId,
+          title: dto.title,
+          image: dto.image,
+          profileId: profile.id,
+        },
+      });
+
+      return {
+        data: {
+          movie,
+        },
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async updateWatchlistMovie({
+    userId,
+    movieId,
+    dto,
+  }: {
+    userId: string;
+    movieId: string;
+    dto: UpdateMovieDto;
+  }) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const movie = await this.prisma.watchlistMovie.update({
+        where: {
+          id: movieId,
+        },
+        data: dto,
+      });
+
+      return {
+        data: {
+          movie,
+        },
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async deleteWatchlistMovie({ userId, movieId }: { userId: string; movieId: string }) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      await this.prisma.watchlistMovie.delete({
+        where: {
+          movieId_profileId: {
+            movieId,
+            profileId: profile.id,
+          },
+        },
+      });
+
+      return {
+        message: 'Movie removed from watchlist',
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async getWatchedMovies(userId: string, dto: PaginationParamsDto) {
+    const { page = 1, limit = 10 } = dto;
+
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const skip = (page - 1) * limit;
+
+      const [movies, totalResults] = await Promise.all([
+        this.prisma.watchedMovie.findMany({
+          where: {
+            profileId: profile.id,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          skip,
+          take: limit,
+        }),
+
+        this.prisma.watchedMovie.count({
+          where: {
+            profileId: profile.id,
+          },
+        }),
+      ]);
+
+      return {
+        data: {
+          movies,
+        },
+        page,
+        limit,
+        totalResults,
+        totalPages: Math.ceil(totalResults / limit),
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async addToWatched({ userId, dto }: { userId: string; dto: CreateMovieDto }) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const movie = await this.prisma.watchedMovie.create({
+        data: {
+          movieId: dto.movieId,
+          title: dto.title,
+          image: dto.image,
+          profileId: profile.id,
+        },
+      });
+
+      return {
+        data: {
+          movie,
+        },
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async updateWatchedMovie({
+    userId,
+    movieId,
+    dto,
+  }: {
+    userId: string;
+    movieId: string;
+    dto: UpdateMovieDto;
+  }) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+      });
+
+      if (!profile) {
+        throw new Error('Profile not found');
+      }
+
+      const movie = await this.prisma.watchedMovie.update({
+        where: {
+          id: movieId,
+        },
+        data: dto,
+      });
+
+      return {
+        data: {
+          movie,
+        },
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async deleteWatchedMovie({ userId, movieId }: { userId: string; movieId: string }) {
+    const profile = await this.prisma.profile.findUnique({
+      where: { userId },
+    });
+
+    if (!profile) {
+      throw new Error('Profile not found');
+    }
+
+    try {
+      await this.prisma.watchedMovie.delete({
+        where: {
+          movieId_profileId: {
+            movieId,
+            profileId: profile.id,
+          },
+        },
+      });
+
+      return {
+        message: 'Movie removed from watched',
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async getWatchlistMovieIds(userId: string) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+        include: {
+          watchlistMovies: {
+            select: {
+              movieId: true,
+            },
+          },
+        },
+      });
+
+      return {
+        data: {
+          movieIds: profile?.watchlistMovies.map((movie) => movie.movieId) || [],
+        },
+      };
+    } catch (error) {
+      handleCatchError(error, InternalServerErrorException);
+    }
+  }
+
+  public async getWatchedMovieIds(userId: string) {
+    try {
+      const profile = await this.prisma.profile.findUnique({
+        where: { userId },
+        include: {
+          watchedMovies: {
+            select: {
+              movieId: true,
+            },
+          },
+        },
+      });
+
+      return {
+        data: {
+          movieIds: profile?.watchedMovies.map((movie) => movie.movieId) || [],
+        },
       };
     } catch (error) {
       handleCatchError(error, InternalServerErrorException);
