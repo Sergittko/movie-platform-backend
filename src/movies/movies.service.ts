@@ -143,4 +143,20 @@ export class MoviesService {
       results: data.results,
     };
   }
+
+  async getMovieById(id: number) {
+    const { data } = await firstValueFrom(
+      this.httpService.get(`${this.baseUrl}/movie/${id}`, {
+        params: {
+          api_key: this.apiKey,
+          language: 'en-US',
+          append_to_response: 'credits,videos,similar,recommendations,images',
+        },
+      }),
+    );
+
+    return {
+      movie: data,
+    };
+  }
 }
