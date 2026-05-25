@@ -1,13 +1,22 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+
+import { IS_PUBLIC_KEY } from '@/common/decorators/public.decorator';
 
 @Injectable()
 export class SupabaseGuard extends AuthGuard('jwt') {
-  canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
-    const publicRoutes = ['/signUp', '/signIn', '/refresh', '/'];
+  constructor(private reflector: Reflector) {
+    super();
+  }
 
-    if (publicRoutes.includes(request.url as string)) return true;
+  canActivate(context: ExecutionContext): boolean {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (isPublic) return true;
 
     return super.canActivate(context) as boolean;
   }

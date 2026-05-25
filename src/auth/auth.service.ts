@@ -144,4 +144,12 @@ export class AuthService {
       handleCatchError(error);
     }
   }
+
+  public getMe(user: { id: string; email: string }) {
+    return {
+      data: {
+        user,
+      },
+    };
+  }
 }
