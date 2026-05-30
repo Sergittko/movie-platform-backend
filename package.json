@@ -14,7 +14,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepare": "husky install",
-    "postinstall": "node -e \"if (process.env.CI) process.exit(0); require('child_process').execSync('husky install')\"",
+    "postinstall": "node -e \"if (process.env.VERCEL) process.exit(0); require('child_process').execSync('husky install')\"",
     "prisma-init": "npx prisma migrate dev --name init",
     "prisma-generate": "npx prisma generate",
     "vercel-build": "npm run prisma-generate && npm run build"
