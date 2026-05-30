@@ -62,13 +62,7 @@ export class UsersService {
     }
   }
 
-  public async uploadFile({
-    file,
-    userId,
-  }: {
-    file: Express.Multer.File;
-    userId: string;
-  }): Promise<any> {
+  public async uploadFile({ file, userId }: { file: any; userId: string }): Promise<any> {
     try {
       const supabaseClient = this.supabase.getClient();
 

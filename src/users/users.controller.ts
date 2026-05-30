@@ -50,7 +50,7 @@ export class UsersController {
         ],
       }),
     )
-    file: Express.Multer.File,
+    file: any,
   ) {
     return this.usersService.uploadFile({ userId, file });
   }
