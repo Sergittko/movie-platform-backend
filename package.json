@@ -13,7 +13,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "prepare": "node -e \"if (process.env.CI || process.env.HUSKY === '0') process.exit(0); require('child_process').execSync('husky install')\"",
+    "prepare": "husky",
     "prisma-init": "npx prisma migrate dev --name init",
     "prisma-generate": "npx prisma generate",
     "vercel-build": "npm run prisma-generate && npm run build"
@@ -38,7 +38,6 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "jwks-rsa": "^4.0.1",
-    "multer": "^2.1.1",
     "passport-jwt": "^4.0.1",
     "prisma": "^6.19.3",
     "reflect-metadata": "^0.2.2",
