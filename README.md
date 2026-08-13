@@ -281,6 +281,14 @@ before commits.
 
 ---
 
+### 📚 Documentation
+
+A Postman collection is included in:
+
+`docs/postman_collection/MoviesPlatform.postman_collection.json`
+
+---
+
 ## 🔗 Related Project
 
 ### Movie Platform Frontend
