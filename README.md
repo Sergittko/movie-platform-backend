@@ -1,98 +1,300 @@
+<h1 align="center">Movie Platform Backend 🎬</h1>
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  REST API backend for a full-stack movie platform built with NestJS and Node.js.
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p align="center">
+  <img src="https://img.shields.io/badge/NestJS-11-E0234E?style=flat&logo=nestjs&logoColor=white">
+  <img src="https://img.shields.io/badge/Node.js-22-339933?style=flat&logo=node.js&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Prisma-6-2D3748?style=flat&logo=prisma&logoColor=white">
+  <img src="https://img.shields.io/badge/Supabase-2-3ECF8E?style=flat&logo=supabase&logoColor=white">
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📖 About the Project
 
-## Project setup
+Movie Platform Backend is a REST API built with NestJS for a full-stack movie
+platform.
+
+The backend provides authentication, user management, movie data, personalized
+features and premium functionality for the frontend application.
+
+The project uses JWT-based authentication, Supabase, Prisma ORM and external
+movie data services.
+
+---
+
+## 🛠️ Technologies
+
+### Backend
+
+- NestJS
+- Node.js
+- TypeScript
+- REST API
+- JWT Authentication
+- Passport JWT
+- Supabase
+- Prisma ORM
+- Axios
+- Class Validator
+- Class Transformer
+
+### Database & Services
+
+- PostgreSQL / Supabase
+- Prisma Migrations
+- Supabase Authentication
+
+### Development Tools
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+- Commitlint
+- Jest
+- Supertest
+- Postman
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication
+
+- User registration
+- User login
+- JWT-based authentication
+- Protected and public routes
+- Authentication guards
+- Token validation
+- Supabase authentication integration
+
+### 🎬 Movies
+
+- Movie lists
+- Movie search
+- Movie filtering and sorting
+- Movie genres
+- Pagination
+- Movie details
+- Integration with external movie data services
+
+### 👤 Users
+
+- User profiles
+- Watch List
+- Seen Movies
+- Saved movie management
+- User preferences
+- Premium status
+
+### 🎯 Personalized Recommendations
+
+The backend supports personalized movie recommendations based on user
+preferences and movie interactions.
+
+Authenticated users can evaluate movies and receive personalized
+recommendations through the API.
+
+### 📊 Premium Statistics
+
+Premium users can access personalized statistics related to:
+
+- Watched movies
+- Movie genres
+- Viewing activity
+- Personal movie collections
+
+Premium access is validated on the backend before protected data is returned.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 
 ```bash
-$ npm install
+git clone https://github.com/Sergittko/movie-platform-backend.git
+cd movie-platform-backend
 ```
 
-## Compile and run the project
+### 2. Install dependencies
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 3. Configure environment variables
+
+Create a `.env` file based on the required environment variables.
+
+```env
+```
+
+> Environment variable names may differ depending on your local configuration.
+
+### 4. Generate Prisma Client
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run prisma-generate
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 5. Run database migrations
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run prisma-init
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 6. Start the development server
 
-## Resources
+```bash
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+The API will be available at:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```text
+http://localhost:3001
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📦 Available Scripts
 
-## Stay in touch
+### Development
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm run start
+```
 
-## License
+Starts the application.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Watch mode
+
+```bash
+npm run start:dev
+```
+
+Starts the application in watch mode.
+
+### Debug mode
+
+```bash
+npm run start:debug
+```
+
+Starts the application in debug mode with watch mode enabled.
+
+### Production build
+
+```bash
+npm run build
+```
+
+Builds the application for production.
+
+### Production
+
+```bash
+npm run start:prod
+```
+
+Starts the compiled production application.
+
+### Prisma Generate
+
+```bash
+npm run prisma-generate
+```
+
+Generates the Prisma Client.
+
+### Prisma Migration
+
+```bash
+npm run prisma-init
+```
+
+Creates and applies a new Prisma development migration.
+
+### Lint
+
+```bash
+npm run lint
+```
+
+Runs ESLint and automatically fixes available issues.
+
+### Format
+
+```bash
+npm run format
+```
+
+Formats TypeScript source and test files using Prettier.
+
+---
+
+## 🧪 Testing
+
+The project uses Jest and Supertest for testing.
+
+### Unit tests
+
+```bash
+npm run test
+```
+
+### End-to-end tests
+
+```bash
+npm run test:e2e
+```
+
+### Test coverage
+
+```bash
+npm run test:cov
+```
+
+---
+
+## 🔧 Code Quality
+
+The project uses several tools to maintain code quality and consistency:
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+- Commitlint
+- Conventional Commits
+- Jest
+
+Git hooks are configured to automatically run validation and formatting
+before commits.
+
+---
+
+## 🔗 Related Project
+
+### Movie Platform Frontend
+
+[Movie Platform Frontend](https://github.com/Sergittko/movie-platform-frontend)
+
+---
+
+## 🌐 Live Demo
+
+[Movie Platform](https://movie-platform-frontend-henna.vercel.app/)
+
+---
+
+<p align="center">
+  Done by <b>Sergio Diorov</b>
+</p>
